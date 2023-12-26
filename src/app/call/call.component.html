@@ -1,0 +1,56 @@
+<div *ngIf="!completed" class="call-container">
+
+  <div class="fake-call">
+    <div class="screen">
+      <img [src]="puzzleImage"/>
+      <ng-container *ngIf="audioInit">
+        <audio  #audio autoplay (ended)=clipCompleted()>
+          <source [src]="audioURL" type="audio/mp3">
+        </audio>
+      </ng-container>
+
+    </div>
+    <div class="actions">
+      <div class="interactions">
+        <button nz-button nzType="text">
+        <nz-badge [nzCount]="3">
+          <i style="font-size: 24px; color: white;" nz-icon nzType="team" nzTheme="outline"></i>
+        </nz-badge>
+      </button>
+      </div>
+      <!-- <button nz-button nzType="primary" nzDanger>Record your Opinion</button> -->
+    </div>
+  </div>
+
+  <div class="participants">
+    <div class="text-align-center title mt-20 mb-12">Participants</div>
+    <div class="joinee">
+      <svg class="mr-8" width="24" height="24" [data-jdenticon-value]="person1Avatar"></svg>
+      <div class="name">Person 1</div> <img *ngIf="speaker === 'person1'" class="speaker" src="/assets/speaker.png" />
+    </div>
+    <div class="joinee">
+      <svg class="mr-8" width="24" height="24" [data-jdenticon-value]="person2Avatar"></svg>
+      <div class="name">Person 2</div> <img *ngIf="speaker === 'person2'" class="speaker" src="/assets/speaker.png" />
+    </div>
+    <div class="joinee">
+      <svg class="mr-8" width="24" height="24" [data-jdenticon-value]="callService.callSettings.userAvatar"></svg>
+      <div class="name">Person 3 <b>(You)</b></div>
+    </div>
+  </div>
+  </div>
+
+  <ng-container *ngIf="completed">
+    <div class="cmp-msg">
+
+      <nz-alert nzType="success" [nzMessage]="msg" nzShowIcon></nz-alert>
+
+    </div>
+
+    <ng-template #msg>
+      <b>Thank you</b> for taking part in the meeting. The meeting has now ended. A ZIP file will be downloaded to your computer. Please upload this ZIP file to the Qualtrics survey. If the download did not start automatically, <a class="manual-download" (click)="saveZipFile()">click here</a> to download the ZIP file manually
+    </ng-template>
+  </ng-container>
+
+
+
+  <app-opinion-record-modal #opinionModal (closed)="opinionReceived($event)" [voiceConfig]="voiceConfig" [recordings]="recordings" [msgs]="msgs" [callService]="callService"></app-opinion-record-modal>

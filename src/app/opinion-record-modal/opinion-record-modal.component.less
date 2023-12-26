@@ -1,0 +1,37 @@
+
+
+.record-btn {
+  border: none;
+  height: 48px;
+  width: 48px;
+  background: red;
+
+  &[disabled] {
+    opacity: 0.3;
+  }
+
+  .circle {
+    height: 16px;
+    width: 16px;
+    background: white;
+    border-radius: 50%;
+  }
+
+  .square {
+    height: 16px;
+    width: 16px;
+    background: white;
+  }
+}
+
+img {
+  object-fit: contain;
+  display: block;
+  max-width: 100%;
+}
+
+::ng-deep {
+  textarea.ant-input {
+    resize: none;
+  }
+}

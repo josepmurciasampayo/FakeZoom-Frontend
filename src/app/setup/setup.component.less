@@ -1,0 +1,73 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex-direction: column;
+}
+
+canvas {
+  border: 2px solid #0e71eb;
+  border-radius: 2px;
+}
+
+::ng-deep {
+  .ant-btn-icon-only {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .anticon {
+    padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  }
+}
+
+audio {
+  width: 205px;
+    height: 32px;
+}
+
+.avatar-selection {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 0 25%;
+
+  svg {
+    margin: 10px;
+    cursor: pointer;
+
+    &.selected {
+      border: 2px solid #0e71eb;
+      border-radius: 2px;
+    }
+  }
+}
+
+.audio-note {
+  width: 380px;
+}
+
+.replay-ico {
+  height: 24px;
+  width: 24px;
+}
+
+.voice-changer {
+  width:380px;
+  margin-bottom: 32px;
+
+  ::ng-deep {
+    canvas {
+      width: 382px;
+      height: 32px;
+    }
+  }
+
+}

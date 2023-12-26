@@ -1,0 +1,175 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+
+.select-avatar {
+  img {
+    height: 272px;
+    width: 399px;
+    background-color: #212022;
+    object-fit: scale-down;
+    border-radius: 8px;
+  }
+}
+
+.avatar-opts {
+  margin: 8px 0;
+  display: flex;
+
+  * + * {
+    margin-left: 12px;
+  }
+
+  ::ng-deep {
+    nz-avatar {
+      cursor: pointer;
+    }
+
+    .selected {
+      &.ant-avatar {
+        border: 4px solid #0e71eb;
+      }
+    }
+  }
+}
+
+.how-things-work {
+  max-width: 480px;
+}
+
+.call-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+
+  .fake-call {
+    background-color: black;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .screen {
+      flex: 1;
+    }
+
+    .actions {
+      background-color: #212022;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .interactions {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .participants {
+    width: 320px;
+    height: 100%;
+    background: #282828;
+    padding: 0 8px ;
+
+    .joinee {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin: 0 2px;
+
+      .name {
+        color: white;
+      }
+    }
+
+    .joinee + .joinee {
+      border-top: 1px solid #484646
+    }
+
+  }
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.white {
+  color: white;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.mt-20 {
+  margin: 20px;
+}
+
+/* Make it looks good on CodePen */
+html {
+  background-color: #cef;
+}
+html, body, .sonar-wrapper {
+  height: 100%;
+}
+
+/* Prevent scrollbars to appear when waves go out of bound */
+.sonar-wrapper {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  padding: 8rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The circle */
+.sonar-emitter {
+  position: relative;
+  margin: 0 auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  background-color:  transparent;
+}
+
+/* the 'wave', same shape and size as its parent */
+.sonar-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-color: #0e71eb;
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/*
+  Animate!
+  NOTE: add browser prefixes where needed.
+*/
+.sonar-wave {
+  animation: sonarWave 2s linear infinite;
+}
+
+@keyframes sonarWave {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}

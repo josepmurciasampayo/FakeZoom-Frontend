@@ -1,0 +1,133 @@
+<div class="root" >
+  <ng-container *ngIf="testingMic">
+    <div class="title d-flex">
+      <div class="mr-8">Testing Microphone</div>
+
+      <div class="loading"></div>
+    </div>
+    <div *ngIf="!micBlocked" class="d-flex vertical">
+      <div class="d-flex justify-content-space-between align-center">
+        <div class="mr-8">Input Level</div>
+        <ng-container [ngTemplateOutlet]="canvasTemp" [ngTemplateOutletContext]="{dimen: {width: '512px', height: '24px' }}"></ng-container>
+      </div>
+    </div>
+
+    <div *ngIf="micBlocked">
+      <nz-alert
+        nzType="error"
+        nzMessage="Microphone is not accessible"
+        nzDescription="Please grant required access to continue"
+        nzShowIcon
+      ></nz-alert>
+    </div>
+
+    <div *ngIf="micMuted">
+      <nz-alert
+        nzType="error"
+        nzMessage="Microphone is on mute"
+        nzDescription="Please unmute and refresh the page to continue"
+        nzShowIcon
+      ></nz-alert>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="speakerTesting">
+
+    <div class="title d-flex">
+      <div class="mr-8">Testing Audio</div>
+    </div>
+
+    <nz-alert class="audio-note mb-12" nzType="info" nzMessage=" Please type the word you hear into the textbox below. Click play on the audio clip to repeat the word" nzShowIcon></nz-alert>
+
+    <nz-input-group class="mb-12 d-flex align-center" nzSize="large" [nzAddOnAfter]="suffixButton">
+      <input class="mr-8" type="text" nz-input [(ngModel)]="wordToCheck" placeholder="Type what you hear" />
+    </nz-input-group>
+    <ng-template #suffixButton>
+   <i (click)="replay()" nz-icon nzType="play-circle"></i>
+    </ng-template>
+    <audio #speakerAudio autoplay>
+      <source [src]="speakerTestAudio" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+    <button class="width-100" nz-button nzType="primary" [disabled]="!speakerTestPassed" (click)="startVoiceChangerTest()">Continue</button>
+  </ng-container>
+
+  <ng-container *ngIf="listenYourself">
+
+    <div class="title d-flex">
+      <div class="mr-8">Voice Changer Test</div>
+    </div>
+
+    <nz-alert class="audio-note mb-12" nzType="info" nzMessage="During the meeting, a voice changer will be active when you use your microphone. Please test your microphone by saying the 3 sentences below into your microphone. You should hear an echo of yourself with the voice changing active. Once you have spoken the sentences you can go to the next step." nzShowIcon></nz-alert>
+
+    <div class="voice-changer instructions">
+      <ol>
+        <li *ngFor="let s of randomSentences">
+          {{s.sentence}}
+        </li>
+      </ol>
+    </div>
+    <canvas class="mb-12" #canvas2 width="380px" height="24px"></canvas>
+        <button class="width-100 mt-12" nz-button nzType="primary" [disabled]="!canProceedVoiceChanger" (click)="endVoiceChangerTest()">Continue</button>
+  </ng-container>
+
+  <ng-container *ngIf="selectingAvatar && !showInstructionsStep">
+    <div class="title d-flex">
+      Select Avatar
+    </div>
+
+    <nz-alert class="audio-note mb-12" nzType="info" nzMessage="Choose the visual avatar that will be displayed in the meeting for you" nzShowIcon></nz-alert>
+
+    <div class="avatar-selection mb-12">
+      <svg [class.selected]="token === callService.callSettings.userAvatar" (click)="callService.callSettings.userAvatar = token;" width="64" height="64" *ngFor="let token of avatarToken" [data-jdenticon-value]="token"></svg>
+    </div>
+
+  <button nz-button nzType="primary" [disabled]="!callService.callSettings.userAvatar" (click)="nextInstructions()">Continue</button>
+
+  </ng-container>
+
+
+  <ng-container *ngIf="showInstructionsStep">
+    <div class="title d-flex">
+      Important Instructions
+    </div>
+
+    <div class="instructions">
+      <ul *ngIf="showInstructionsStep === 1">
+        <li>
+          In the following meeting you will try to help solve 5 computer science related problems in a group of 3 people. We are comparing scores across these problems between men and women to determine how well women do versus men.
+        </li>
+        <li>
+          To help maintain your anonymity, you will be using voice changing software.
+        </li>
+        <li>
+          Once the meeting has begun, we ask that you do not leave your computer unless absolutely necessary. Please do not search for any outside information (e.g., using Google) during the meeting.
+        </li>
+      </ul>
+
+      <ng-container *ngIf="showInstructionsStep === 2">
+        We are now searching for two other participants to match you with.<br/>
+        Please wait, this process can take a few minutes.
+      </ng-container>
+
+      <ng-container *ngIf="showInstructionsStep === 3 || showInstructionsStep === 4">
+        You are in the role of judge. There are two participants in the role of brainstormers. In this task, both the judge's voice and the brainstormers' voices will be voice-changed to help maintain anonymity. During the brainstormers' discussion, they will not be able to hear you. After the discussion, you will record your own opinion which they will listen to. Please wait while the connection is established.
+        <div *ngIf="showInstructionsStep === 4">
+          <nz-alert class="w-100 mt-12 mb-12" nzType="info" nzMessage="The meeting room is ready. Please press 'Begin Meeting' as soon as you are ready." nzShowIcon></nz-alert>
+        </div>
+      </ng-container>
+
+
+    </div>
+
+  <button class="mt-12" nz-button nzType="primary" [nzLoading]="waitingForParticipants || waitingForConnection"  (click)="nextInstructions()">{{instructionButtonLabel}}</button>
+
+  </ng-container>
+
+
+</div>
+
+
+<ng-template #canvasTemp let-dimen="dimen">
+  <canvas #canvas [attr.width]="dimen.width" [attr.height]="dimen.height"></canvas>
+</ng-template>

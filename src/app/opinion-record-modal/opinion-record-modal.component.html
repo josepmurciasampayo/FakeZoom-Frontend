@@ -1,0 +1,39 @@
+<nz-modal [nzWidth]="1024" [(nzVisible)]="visible" (nzAfterClose)="modalClosed()" [nzOkLoading]="hideClicked" [nzCancelText]="null" (nzOnOk)="hide()" nzOkText="Next" [nzOkDisabled]="!canSubmit" [nzClosable]="false" nzTitle="Record your opinion" >
+  <ng-container *nzModalContent>
+    <nz-spin [nzSpinning]="hideClicked" nzTip="Please wait a moment while the brainstormers complete the problem. We will move on to the next problem in a moment.">
+      <p class="mb-12">
+        The two brainstormers have completed their conversation. Please record an audio clip of yourself stating what you think the answer to this question is. The brainstormers will be able to hear your audio clip before inputting their answers into the system.
+      </p>
+    <div class="d-flex align-center justify-content-space-between mb-12">
+
+      <div class="d-flex align-center">
+        <button (click)="recordBtnClicked()" [disabled]="recordEndTime" class="record-btn mr-12" nz-button nzType="primary" nzShape="circle">
+          <i nz-icon [class.circle]="!recording" [class.square]="recording"></i>
+        </button>
+
+        <div *ngIf="!recordEndTime"><b>{{recording? 'Stop': 'Start'}} Recording </b> (With Voice Changer)</div>
+        <div *ngIf="recordEndTime"><b>Audio Recorded (With Voice Changer)</b></div>
+        <a href="" id="download_link"></a>
+      </div>
+    </div>
+
+    <nz-alert class="w-100 mt-12 mb-12" nzType="info" nzMessage="Once you have recorded your audio clip, please also type the same answer that you recorded into the text box below for record-keeping purposes." nzShowIcon></nz-alert>
+    <nz-collapse>
+      <nz-collapse-panel
+        [nzHeader]="collpaseTitle"
+        [nzActive]="showImage"
+      >
+       <img [src]="imgPath"/>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <textarea class="mt-12" nz-input (keydown.Tab)="onKeydown($event)" (keydown.enter)="onKeydown($event)" placeholder="Type the same answer you recorded above." [(ngModel)]="msgs[callService.currentPuzzleId]" [nzAutosize]="{ minRows: 5, maxRows: 5 }"></textarea>
+  </nz-spin>
+  </ng-container>
+  <canvas #canvas [hidden]="true"></canvas>
+</nz-modal>
+
+
+
+
+<!-- (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" -->
