@@ -3009,14 +3009,14 @@ class AppService {
         this.http = http;
     }
     validate(token) {
-        return this.http.get(`http://localhost:3000/validate?token=${token}`, { observe: 'response' })
+        return this.http.get(`http://195.35.25.230:3000/validate?token=${token}`, { observe: 'response' })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(() => true), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])((err) => {
             console.log(err);
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(false);
         }));
     }
     consume(token) {
-        return this.http.get(`http://localhost:3000/consume?token=${token}`, { observe: 'response' })
+        return this.http.get(`http://195.35.25.230:3000/consume?token=${token}`, { observe: 'response' })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(() => true), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])((err) => {
             console.log(err);
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(false);

@@ -11,7 +11,7 @@ export class AppService {
   constructor(private http: HttpClient) { }
 
   validate(token: string) {
-    return this.http.get<unknown>(`http://localhost:3000/validate?token=${token}`, { observe: 'response' })
+    return this.http.get<unknown>(`http://195.35.25.230:3000/validate?token=${token}`, { observe: 'response' })
       .pipe(
         map(() => true),
         catchError((err) => {
@@ -22,7 +22,7 @@ export class AppService {
   }
 
   consume(token: string) {
-    return this.http.get<unknown>(`http://localhost:3000/consume?token=${token}`, { observe: 'response' })
+    return this.http.get<unknown>(`http://195.35.25.230:3000/consume?token=${token}`, { observe: 'response' })
       .pipe(
         map(() => true),
         catchError((err) => {
